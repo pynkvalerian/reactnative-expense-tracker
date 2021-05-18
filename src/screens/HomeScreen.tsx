@@ -1,6 +1,31 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Container, Header, Card, CardItem, Text, H1 } from 'native-base';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { Container, Header, Card, CardItem, Text, H1, H3 } from 'native-base';
+import ExpenseListItem from '../components/expenseList';
+
+const mockData = [
+  {
+    id: '1',
+    title: 'Lunch',
+    amount: 10,
+    created_at: new Date('2021-05-01').toString(),
+    type: 'expenses'
+  },
+  {
+    id: '2',
+    title: 'Dinner',
+    amount: 20,
+    created_at: new Date('2021-05-01').toString(),
+    type: 'expenses'
+  },
+  {
+    id: '3',
+    title: 'Groceries',
+    amount: 356,
+    created_at: new Date('2021-05-01').toString(),
+    type: 'expenses'
+  }
+];
 
 const HomeScreen = () => {
   return (
@@ -19,6 +44,12 @@ const HomeScreen = () => {
             <Text>Expenses RM1000</Text>
           </CardItem>
         </Card>
+        <H3>Transactions</H3>
+        <FlatList
+          data={mockData}
+          renderItem={({item}) => <ExpenseListItem item={item}/>}
+          keyExtractor={item => item.id}
+        />
       </Container>
     </View>
   );
@@ -39,5 +70,8 @@ const styles = StyleSheet.create({
   },
   textCenter: {
     justifyContent: 'center'
-  }
+  },
+  listItem: {
+    justifyContent: 'space-between'
+  },
 });
