@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { Card, CardItem, Text } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 
 interface ItemType {
   id: string;
@@ -11,17 +12,21 @@ interface ItemType {
 }
 
 const ExpenseListItem = ({item}: {item: ItemType}) => {
+  const navigation = useNavigation();
+
   return (
-    <Card>
-      <CardItem style={styles.listItem}>
-        <View>
-          <Text>{ item.title }</Text>
-        </View>
-        <View>
-          <Text>RM { item.amount }</Text>
-        </View>
-      </CardItem>
-    </Card>
+    <Pressable onPress={() => navigation.navigate('Edit')}>
+      <Card>
+        <CardItem style={styles.listItem}>
+          <View>
+            <Text>{ item.title }</Text>
+          </View>
+          <View>
+            <Text>RM { item.amount }</Text>
+          </View>
+        </CardItem>
+      </Card>
+    </Pressable>
   );
 }
 

@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen, AddNewScreen, ProfileScreen } from '../screens';
+import { AddNewScreen, ProfileScreen } from '../screens';
+import HomeNavigator from './HomeNavigator';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Tab = createBottomTabNavigator();
@@ -20,7 +21,7 @@ const BottomTab = () => {
           }} />
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeNavigator}
           options={{
             tabBarIcon: ({ focused }) =>
               <FontAwesome5 name={'home'} solid style={styles.icon} />

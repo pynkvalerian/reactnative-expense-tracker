@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { Container, Header, Card, CardItem, Text, H1, H3 } from 'native-base';
+import { Container, Card, CardItem, Text, H1, H3 } from 'native-base';
 import ExpenseListItem from '../components/expenseList';
 
 const mockData = [
@@ -30,7 +30,6 @@ const mockData = [
 const HomeScreen = () => {
   return (
     <View style={styles.view}>
-      <Header />
       <Container style={styles.container}>
         <Card>
           <CardItem header style={styles.textCenter}>
