@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Container, H3 } from 'native-base';
+import { Container, H3, Text, Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateItem } from '../../redux/expenseSlice';
+import { updateItem, deleteItem } from '../../redux/expenseSlice';
 import _ from 'lodash';
 import ExpenseForm from '../../components/form';
 import { ItemType } from '../../types';
 
-const EditScreen = ({ route }) => {
+const EditScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const expense = useSelector(state => _.find(state.expenses.list, { id }));
   const dispatch = useDispatch();
@@ -16,11 +16,18 @@ const EditScreen = ({ route }) => {
     dispatch(updateItem(item));
   }
 
+  const onDelete = () => {
+    dispatch(deleteItem(expense));
+    navigation.navigate('Home');
+  }
+
   return (
     <View style={styles.view}>
       <Container style={styles.container}>
-          <H3>Edit {expense.title}</H3>
-          <ExpenseForm expense={expense} onSave={onSave}/>
+        <ExpenseForm expense={expense} onSave={onSave}/>
+        <Button bordered danger full onPress={onDelete}>
+          <Text>Delete</Text>
+        </Button>
       </Container>
     </View>
   );
@@ -35,14 +42,4 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
-  typeSelect: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: "space-evenly"
-  },
-  datepicker: {
-    marginVertical: 20,
-    marginHorizontal: 'auto',
-    justifyContent: 'center',
-  }
 });

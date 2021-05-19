@@ -16,7 +16,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
 
   const [type, setType] = useState(expense?.type || 'expenses');
   const [title, setTitle] = useState(expense?.title || '');
-  const [amount, setAmount] = useState(String(expense?.amount) || '');
+  const [amount, setAmount] = useState(expense?.amount || '');
   const [date, setDate] = useState(expense?.createdAt || new Date());
 
   const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {

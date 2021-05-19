@@ -39,10 +39,13 @@ export const expenseSlice = createSlice({
     updateItem: (state, action) => {
       const index = state.list.findIndex(item => item.id == action.payload.id);
       state.list[index] = action.payload;
+    },
+    deleteItem: (state, action) => {
+      _.remove(state.list, (item) => item.id === action.payload.id);
     }
   }
 });
 
-export const { addNew, updateItem } = expenseSlice.actions;
+export const { addNew, updateItem, deleteItem } = expenseSlice.actions;
 
 export default expenseSlice.reducer;
