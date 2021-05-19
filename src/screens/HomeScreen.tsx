@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { Container, Card, CardItem, Text, H1, H3 } from 'native-base';
 import ExpenseListItem from '../components/expenseList';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import _ from 'lodash';
 import { fetchExpenses } from '../redux/expenseSlice';
+import { useAppSelector } from '../redux/hooks';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,12 @@ const HomeScreen = () => {
     dispatch(fetchExpenses());
   }, [dispatch]);
 
-  const data = useSelector(state =>
+  const data = useAppSelector((state) =>
     _.orderBy(state.expenses.list, ['createdAt'], ['desc'])
   );
-  const stats = useSelector(state => state.expenses.stats);
+  const stats = useAppSelector((state) =>
+    state.expenses.stats
+  );
 
   return (
     <View style={styles.view}>
@@ -37,7 +40,7 @@ const HomeScreen = () => {
         <FlatList
           data={data}
           renderItem={({item}) => <ExpenseListItem item={item}/>}
-          keyExtractor={item => item.id}
+          keyExtractor={(_item, index) => String(index)}
         />
       </Container>
     </View>

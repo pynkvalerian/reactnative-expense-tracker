@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Container, H3 } from 'native-base';
-import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/expenseSlice';
 import ExpenseForm from '../../components/form';
 import { ItemType } from '../../types';
+import { useAppDispatch } from '../../redux/hooks';
 
 const AddNewScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSave = (item: ItemType) => {
     dispatch(addItem(item));

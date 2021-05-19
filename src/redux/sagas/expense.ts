@@ -11,6 +11,12 @@ import {
   deleteSuccess
 } from "../expenseSlice";
 import { getExpensesApi } from '../../api/expenses';
+import { ItemType } from '../../types';
+
+interface ActionType {
+  type: string;
+  payload: ItemType;
+}
 
 function* handlefetchExpenses() {
   try {
@@ -22,7 +28,7 @@ function* handlefetchExpenses() {
   }
 };
 
-function* handleAddExpense(action) {
+function* handleAddExpense(action: ActionType) {
   try {
     yield call(getExpensesApi);
     yield put (addSuccess({ ...action.payload }));
@@ -31,7 +37,7 @@ function* handleAddExpense(action) {
   }
 }
 
-function* handleUpdateExpense(action) {
+function* handleUpdateExpense(action: ActionType) {
   try {
     yield call(getExpensesApi);
     yield put (updateSuccess({ ...action.payload }));
@@ -40,7 +46,7 @@ function* handleUpdateExpense(action) {
   }
 }
 
-function* handleDeleteExpense(action) {
+function* handleDeleteExpense(action: ActionType) {
   try {
     yield call(getExpensesApi);
     yield put (deleteSuccess({ ...action.payload }));

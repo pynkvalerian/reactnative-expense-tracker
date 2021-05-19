@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Container, H3, Text, Button } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import { Container, Text, Button } from 'native-base';
 import { updateItem, deleteItem } from '../../redux/expenseSlice';
 import _ from 'lodash';
 import ExpenseForm from '../../components/form';
@@ -9,6 +8,7 @@ import { ItemType } from '../../types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { HomeNavigatorType } from '../../navigations/HomeNavigator';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 
 type EditScreenNavigationProp = StackNavigationProp<
   HomeNavigatorType,
@@ -22,9 +22,12 @@ type Props = {
 };
 
 const EditScreen = ({ navigation, route }: Props) => {
+  const dispatch = useAppDispatch();
   const { id } = route.params;
-  const expense = useSelector(state => _.find(state.expenses.list, { id }));
-  const dispatch = useDispatch();
+
+  const expense = useAppSelector((state) =>
+    _.find(state.expenses.list, { id })
+  );
 
   const onSave = (item: ItemType) => {
     dispatch(updateItem(item));

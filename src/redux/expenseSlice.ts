@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash';
 import { ItemType } from '../types';
 
-const calcStats = (list) => {
+const calcStats = (list: ItemType[]) => {
   return {
     balance: _.reduce(list, (sum, item) => {
       return item.type === 'income'
@@ -20,22 +20,36 @@ const calcStats = (list) => {
         : sum
       }, 0),
   }
-}
+};
+
+interface ExpenseState {
+  list: ItemType[],
+  stats: {
+    balance: number;
+    income: number;
+    expenses: number;
+  }
+};
+
+const initialState: ExpenseState = {
+  list: [],
+  stats: {
+    balance: 0,
+    income: 0,
+    expenses: 0,
+  },
+};
 
 export const expenseSlice = createSlice({
   name: 'expenses',
-  initialState: {
-    list: [],
-    stats: {
-      balance: 0,
-      income: 0,
-      expenses: 0,
-    },
-  },
+  initialState,
   reducers: {
-    addItem: (newItem) => newItem,
-    addSuccess: (state, action) => {
-      const newItem: ItemType = {
+    addItem: (newItem) => {
+      console.log('newItem additem', newItem);
+      return newItem
+    },
+    addSuccess: (state, action: PayloadAction<ItemType>) => {
+      const newItem = {
         id: state.list.length + 1,
         ...action.payload
       }
@@ -43,13 +57,13 @@ export const expenseSlice = createSlice({
       state.stats = calcStats(state.list);
     },
     updateItem: (newItem) => newItem,
-    updateSuccess: (state, action) => {
+    updateSuccess: (state, action: PayloadAction<ItemType>) => {
       const index = state.list.findIndex(item => item.id == action.payload.id);
       state.list[index] = action.payload;
       state.stats = calcStats(state.list);
     },
     deleteItem: (item) => item,
-    deleteSuccess: (state, action) => {
+    deleteSuccess: (state, action: PayloadAction<ItemType>) => {
       _.remove(state.list, (item) => item.id === action.payload.id);
       state.stats = calcStats(state.list);
     },
@@ -57,7 +71,7 @@ export const expenseSlice = createSlice({
     expensesCRUDFailed: () => {
       console.log('failedddddddddd')
     },
-    setExpenses: (state, action) => {
+    setExpenses: (state, action: PayloadAction<ItemType[]>) => {
       const list = action.payload;
       state.stats = calcStats(list);
       state.list = list;

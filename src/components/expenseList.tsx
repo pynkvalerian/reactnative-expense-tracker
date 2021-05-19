@@ -4,7 +4,11 @@ import { Card, CardItem, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { ItemType } from '../types';
 
-const ExpenseListItem = ({item}: {item: ItemType}) => {
+interface ExpenseListItemProp {
+  item: ItemType;
+}
+
+const ExpenseListItem = ({ item }: ExpenseListItemProp) => {
   const navigation = useNavigation();
 
   return (
