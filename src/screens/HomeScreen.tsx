@@ -2,32 +2,12 @@ import * as React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { Container, Card, CardItem, Text, H1, H3 } from 'native-base';
 import ExpenseListItem from '../components/expenseList';
-
-const mockData = [
-  {
-    id: '1',
-    title: 'Lunch',
-    amount: 10,
-    created_at: new Date('2021-05-01').toString(),
-    type: 'expenses'
-  },
-  {
-    id: '2',
-    title: 'Dinner',
-    amount: 20,
-    created_at: new Date('2021-05-01').toString(),
-    type: 'expenses'
-  },
-  {
-    id: '3',
-    title: 'Groceries',
-    amount: 356,
-    created_at: new Date('2021-05-01').toString(),
-    type: 'expenses'
-  }
-];
+import { useSelector } from 'react-redux'
+import { showExpensesList } from '../redux/expenseSlice';
 
 const HomeScreen = () => {
+  const data = useSelector(showExpensesList);
+
   return (
     <View style={styles.view}>
       <Container style={styles.container}>
@@ -45,7 +25,7 @@ const HomeScreen = () => {
         </Card>
         <H3>Transactions</H3>
         <FlatList
-          data={mockData}
+          data={data}
           renderItem={({item}) => <ExpenseListItem item={item}/>}
           keyExtractor={item => item.id}
         />

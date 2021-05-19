@@ -1,14 +1,17 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import BottomTab from './src/navigations/BottomTab';
-import HomeScreen from './src/screens/HomeScreen';
+import store from './src/store';
+import { Provider } from 'react-redux';
 
 const App = () => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <BottomTab />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={{flex: 1}}>
+        <BottomTab />
+      </SafeAreaView>
+    </Provider>
   );
 };
 

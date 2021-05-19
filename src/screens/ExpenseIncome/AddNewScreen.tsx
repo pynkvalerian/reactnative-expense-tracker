@@ -1,18 +1,44 @@
 import React, {useState} from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Keyboard } from 'react-native';
 import { Container, Form, Item, Input, Button, H3, Label, Text } from 'native-base';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
+import { useDispatch } from 'react-redux';
+import { addNew } from '../../redux/expenseSlice';
 
-const AddNewScreen = () => {
+const AddNewScreen = ({navigation}) => {
   const [type, setType] = useState('expenses');
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(new Date());
 
+  const dispatch = useDispatch();
+
   const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
+
+  const reset = () => {
+    setType('expenses');
+    setTitle('');
+    setAmount('');
+    setDate(new Date());
+  }
+
+  const onSave = () => {
+    // check required title + amount
+
+    dispatch(addNew({
+      type,
+      title,
+      date,
+      amount: Number(amount),
+    }))
+
+    Keyboard.dismiss();
+    reset();
+    navigation.navigate('Home');
+  }
 
   return (
     <View style={styles.view}>
@@ -39,7 +65,7 @@ const AddNewScreen = () => {
             </Item>
             <Item floatingLabel>
               <Label>Title</Label>
-              <Input onChangeText={setTitle}/>
+              <Input onChangeText={setTitle} />
             </Item>
             <View style={styles.datepicker}>
               <DateTimePicker
@@ -50,7 +76,7 @@ const AddNewScreen = () => {
                 onChange={onChangeDate}
               />
             </View>
-            <Button full>
+            <Button full onPress={onSave}>
               <Text>Save</Text>
             </Button>
           </Form>

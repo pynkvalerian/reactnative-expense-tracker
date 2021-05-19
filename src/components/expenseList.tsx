@@ -2,14 +2,7 @@ import * as React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { Card, CardItem, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
-
-interface ItemType {
-  id: string;
-  title: string;
-  amount: number;
-  created_at: string;
-  type: string;
-}
+import { ItemType } from '../types';
 
 const ExpenseListItem = ({item}: {item: ItemType}) => {
   const navigation = useNavigation();
