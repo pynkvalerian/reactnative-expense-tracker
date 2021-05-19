@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Keyboard } from 'react-native';
+import { View, StyleSheet, Keyboard, TouchableOpacity } from 'react-native';
 import { Form, Item, Input, Button, Label, Text } from 'native-base';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import _ from 'lodash';
@@ -14,6 +14,7 @@ interface ExpenseFormProps {
 const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
   const navigation = useNavigation();
 
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [type, setType] = useState(expense?.type || 'expenses');
   const [title, setTitle] = useState(expense?.title || '');
   const [amount, setAmount] = useState(expense?.amount || '');
@@ -22,6 +23,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
   const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
+    setShowDatePicker(false);
   };
 
   const reset = () => {
@@ -33,7 +35,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
 
   const onPressSubmit = () => {
     // TODO: check required title + amount
-    
+
     onSave({
       id: expense?.id,
       type,
@@ -74,13 +76,22 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
         <Input value={title} onChangeText={setTitle} />
       </Item>
       <View style={styles.datepicker}>
-        <DateTimePicker
-          value={new Date(date)}
-          mode={"date"}
-          is24Hour={true}
-          display="default"
-          onChange={onChangeDate}
-        />
+        <TouchableOpacity
+          onPress={() => setShowDatePicker(!showDatePicker)}>
+          <View style={styles.dateContainer}>
+            <Label style={styles.dateLabel}>Date</Label>
+            <Text>{new Date(date).toDateString()}</Text>
+          </View>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date(date)}
+            mode={"date"}
+            is24Hour={true}
+            display="spinner"
+            onChange={onChangeDate}
+          />
+        )}
       </View>
       <Button full onPress={onPressSubmit}>
         <Text>Save</Text>
@@ -107,5 +118,16 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 'auto',
     justifyContent: 'center',
+  },
+  dateContainer: {
+    marginHorizontal: 16,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    paddingBottom: 5,
+  },
+  dateLabel: {
+    color: 'gray',
+    fontSize: 14,
+    marginBottom: 5
   }
 });
