@@ -20,19 +20,19 @@ const HomeScreen = () => {
   return (
     <View style={styles.view}>
       <Container style={styles.container}>
-        <Card>
-          <CardItem header style={styles.textCenter}>
+        <Card primary>
+          <CardItem primary header style={styles.textCenter}>
             <Text>Total Balance</Text>
           </CardItem>
-          <CardItem style={styles.textCenter}>
+          <CardItem primary style={styles.textCenter}>
             <H1>RM 4000</H1>
           </CardItem>
-          <CardItem footer style={styles.footer}>
+          <CardItem footer primary style={styles.footer}>
             <Text>Income RM5000</Text>
             <Text>Expenses RM1000</Text>
           </CardItem>
         </Card>
-        <H3>Transactions</H3>
+        <H3 style={styles.transactions}>Transactions</H3>
         <FlatList
           data={data}
           renderItem={({item}) => <ExpenseListItem item={item}/>}
@@ -48,9 +48,11 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: '#F3F4F6'
   },
   container: {
     padding: 20,
+    backgroundColor: '#F3F4F6'
   },
   footer: {
     flexDirection: 'row',
@@ -59,7 +61,12 @@ const styles = StyleSheet.create({
   textCenter: {
     justifyContent: 'center'
   },
-  listItem: {
-    justifyContent: 'space-between'
+  transactions: {
+    marginTop: 20,
+    marginBottom: 10,
   },
+  card: {
+    backgroundColor: '#1FB9BA',
+    color: '#FFF'
+  }
 });
