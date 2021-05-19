@@ -16,6 +16,7 @@ const HomeScreen = () => {
   const data = useSelector(state =>
     _.orderBy(state.expenses.list, ['createdAt'], ['desc'])
   );
+  const stats = useSelector(state => state.expenses.stats);
 
   return (
     <View style={styles.view}>
@@ -25,11 +26,11 @@ const HomeScreen = () => {
             <Text>Total Balance</Text>
           </CardItem>
           <CardItem primary style={styles.textCenter}>
-            <H1>RM 4000</H1>
+            <H1>RM {stats?.balance}</H1>
           </CardItem>
           <CardItem footer primary style={styles.footer}>
-            <Text>Income RM5000</Text>
-            <Text>Expenses RM1000</Text>
+            <Text>Income RM{stats?.income}</Text>
+            <Text>Expenses RM{stats?.expenses}</Text>
           </CardItem>
         </Card>
         <H3 style={styles.transactions}>Transactions</H3>
