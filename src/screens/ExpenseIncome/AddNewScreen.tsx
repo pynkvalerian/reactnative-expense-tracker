@@ -1,86 +1,23 @@
-import React, {useState} from 'react';
-import { View, StyleSheet, Keyboard } from 'react-native';
-import { Container, Form, Item, Input, Button, H3, Label, Text } from 'native-base';
-import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Container, H3 } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { addNew } from '../../redux/expenseSlice';
+import ExpenseForm from '../../components/form';
+import { ItemType } from '../../types';
 
-const AddNewScreen = ({navigation}) => {
-  const [type, setType] = useState('expenses');
-  const [title, setTitle] = useState('');
-  const [amount, setAmount] = useState('');
-  const [date, setDate] = useState(new Date());
-
+const AddNewScreen = () => {
   const dispatch = useDispatch();
 
-  const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
-    const currentDate = selectedDate || date;
-    setDate(currentDate);
-  };
-
-  const reset = () => {
-    setType('expenses');
-    setTitle('');
-    setAmount('');
-    setDate(new Date());
-  }
-
-  const onSave = () => {
-    // check required title + amount
-
-    dispatch(addNew({
-      type,
-      title,
-      createdAt: date,
-      amount: Number(amount),
-    }))
-
-    Keyboard.dismiss();
-    reset();
-    navigation.navigate('Home');
+  const onSave = (item: ItemType) => {
+    dispatch(addNew(item));
   }
 
   return (
     <View style={styles.view}>
       <Container style={styles.container}>
           <H3>Add Expenses/Income</H3>
-          <Form>
-            <View style={styles.typeSelect}>
-              <Button
-                bordered={type !== 'expenses'}
-                onPress={() => setType('expenses')}>
-                <Text>Expenses</Text>
-              </Button>
-              <Button
-                bordered={type !== 'income'}
-                onPress={() => setType('income')}>
-                <Text>Income</Text>
-              </Button>
-            </View>
-            <Item floatingLabel>
-              <Label>Amount</Label>
-              <Input
-                autoFocus
-                onChangeText={setAmount}
-                keyboardType={"numeric"} />
-            </Item>
-            <Item floatingLabel>
-              <Label>Title</Label>
-              <Input onChangeText={setTitle} />
-            </Item>
-            <View style={styles.datepicker}>
-              <DateTimePicker
-                value={date}
-                mode={"date"}
-                is24Hour={true}
-                display="default"
-                onChange={onChangeDate}
-              />
-            </View>
-            <Button full onPress={onSave}>
-              <Text>Save</Text>
-            </Button>
-          </Form>
+          <ExpenseForm onSave={onSave}/>
       </Container>
     </View>
   );
