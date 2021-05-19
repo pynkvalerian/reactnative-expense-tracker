@@ -31,7 +31,7 @@ const AddNewScreen = ({navigation}) => {
     dispatch(addNew({
       type,
       title,
-      date,
+      createdAt: date,
       amount: Number(amount),
     }))
 
@@ -60,6 +60,7 @@ const AddNewScreen = ({navigation}) => {
             <Item floatingLabel>
               <Label>Amount</Label>
               <Input
+                autoFocus
                 onChangeText={setAmount}
                 keyboardType={"numeric"} />
             </Item>

@@ -9,21 +9,21 @@ export const expenseSlice = createSlice({
         id: '1',
         title: 'Lunch',
         amount: 10,
-        created_at: new Date('2021-05-01'),
+        createdAt: new Date('2021-05-01'),
         type: 'expenses'
       },
       {
         id: '2',
         title: 'Dinner',
         amount: 20,
-        created_at: new Date('2021-05-02'),
+        createdAt: new Date('2021-05-02'),
         type: 'expenses'
       },
       {
         id: '3',
         title: 'Groceries',
         amount: 356,
-        created_at: new Date('2021-05-03'),
+        createdAt: new Date('2021-05-03'),
         type: 'expenses'
       }
     ]
@@ -35,12 +35,14 @@ export const expenseSlice = createSlice({
         ...action.payload
       }
       state.list.push(newItem);
+    },
+    updateItem: (state, action) => {
+      const index = state.list.findIndex(item => item.id == action.payload.id);
+      state.list[index] = action.payload;
     }
   }
 });
 
-export const showExpensesList = state => _.orderBy(state.expenses.list, ['created_at'], ['desc']);
-
-export const { addNew } = expenseSlice.actions;
+export const { addNew, updateItem } = expenseSlice.actions;
 
 export default expenseSlice.reducer;

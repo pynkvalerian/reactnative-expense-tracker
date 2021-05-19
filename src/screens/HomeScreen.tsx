@@ -4,9 +4,12 @@ import { Container, Card, CardItem, Text, H1, H3 } from 'native-base';
 import ExpenseListItem from '../components/expenseList';
 import { useSelector } from 'react-redux'
 import { showExpensesList } from '../redux/expenseSlice';
+import _ from 'lodash';
 
 const HomeScreen = () => {
-  const data = useSelector(showExpensesList);
+  const data = useSelector(state =>
+    _.orderBy(state.expenses.list, ['createdAt'], ['desc'])
+  );
 
   return (
     <View style={styles.view}>

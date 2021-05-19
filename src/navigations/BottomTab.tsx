@@ -13,20 +13,19 @@ const BottomTab = () => {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
-          name="Add"
-          component={AddNewScreen}
-          options={{
-            tabBarIcon: ({ focused }) =>
-              <FontAwesome5 name={'plus'} solid style={styles.icon} />
-          }} />
-        <Tab.Screen
           name="Home"
           component={HomeNavigator}
           options={{
             tabBarIcon: ({ focused }) =>
               <FontAwesome5 name={'home'} solid style={styles.icon} />
           }} />
-
+        <Tab.Screen
+          name="Add"
+          component={AddNewScreen}
+          options={{
+            tabBarIcon: ({ focused }) =>
+              <FontAwesome5 name={'plus'} solid style={styles.icon} />
+          }} />
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}

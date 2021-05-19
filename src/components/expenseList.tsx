@@ -8,7 +8,7 @@ const ExpenseListItem = ({item}: {item: ItemType}) => {
   const navigation = useNavigation();
 
   return (
-    <Pressable onPress={() => navigation.navigate('Edit')}>
+    <Pressable onPress={() => navigation.navigate('Edit', { id: item.id })}>
       <Card>
         <CardItem style={styles.listItem}>
           <View>

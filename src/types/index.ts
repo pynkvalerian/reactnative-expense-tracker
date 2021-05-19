@@ -2,7 +2,7 @@ interface ItemType {
   id: string;
   title: string;
   amount: number;
-  created_at: string;
+  createdAt: string;
   type: string;
 }
 
