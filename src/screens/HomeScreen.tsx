@@ -1,12 +1,18 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { Container, Card, CardItem, Text, H1, H3 } from 'native-base';
 import ExpenseListItem from '../components/expenseList';
-import { useSelector } from 'react-redux'
-import { showExpensesList } from '../redux/expenseSlice';
+import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash';
+import { fetchExpenses } from '../redux/expenseSlice';
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchExpenses());
+  }, [dispatch]);
+
   const data = useSelector(state =>
     _.orderBy(state.expenses.list, ['createdAt'], ['desc'])
   );

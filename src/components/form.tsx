@@ -32,13 +32,13 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
   }
 
   const onPressSubmit = () => {
-    // check required title + amount
-
+    // TODO: check required title + amount
+    
     onSave({
       id: expense?.id,
       type,
       title,
-      createdAt: date,
+      createdAt: new Date(date).toDateString(),
       amount: Number(amount),
     });
 
@@ -75,7 +75,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
       </Item>
       <View style={styles.datepicker}>
         <DateTimePicker
-          value={date}
+          value={new Date(date)}
           mode={"date"}
           is24Hour={true}
           display="default"
@@ -83,7 +83,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
         />
       </View>
       <Button full onPress={onPressSubmit}>
-        <Text>Update</Text>
+        <Text>Save</Text>
       </Button>
     </Form>
   );
