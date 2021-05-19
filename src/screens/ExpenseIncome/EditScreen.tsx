@@ -6,8 +6,22 @@ import { updateItem, deleteItem } from '../../redux/expenseSlice';
 import _ from 'lodash';
 import ExpenseForm from '../../components/form';
 import { ItemType } from '../../types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { HomeNavigatorType } from '../../navigations/HomeNavigator';
 
-const EditScreen = ({ navigation, route }) => {
+type EditScreenNavigationProp = StackNavigationProp<
+  HomeNavigatorType,
+  'Edit'
+>;
+type EditScreenRouteProp = RouteProp<HomeNavigatorType, 'Edit'>;
+
+type Props = {
+  navigation: EditScreenNavigationProp;
+  route: EditScreenRouteProp;
+};
+
+const EditScreen = ({ navigation, route }: Props) => {
   const { id } = route.params;
   const expense = useSelector(state => _.find(state.expenses.list, { id }));
   const dispatch = useDispatch();

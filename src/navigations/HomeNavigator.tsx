@@ -2,7 +2,12 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen, EditScreen } from '../screens';
 
-const Stack = createStackNavigator();
+export type HomeNavigatorType = {
+  Home: undefined;
+  Edit: { id: string };
+};
+
+const Stack = createStackNavigator<HomeNavigatorType>();
 
 const HomeNavigator = () => {
   return (
