@@ -19,6 +19,8 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
   const [title, setTitle] = useState(expense?.title || '');
   const [amount, setAmount] = useState(expense?.amount || '');
   const [date, setDate] = useState(expense?.createdAt || new Date());
+  const [titleError, setTitleError] = useState(false);
+  const [amountError, setAmountError] = useState(false);
 
   const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
     const currentDate = selectedDate || date;
@@ -34,19 +36,23 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
   }
 
   const onPressSubmit = () => {
-    // TODO: check required title + amount
+    if (title.length > 0 && Number(amount) !== (NaN || 0)) {
+      onSave({
+        id: expense?.id,
+        type,
+        title,
+        createdAt: new Date(date).toDateString(),
+        amount: Number(amount),
+      });
 
-    onSave({
-      id: expense?.id,
-      type,
-      title,
-      createdAt: new Date(date).toDateString(),
-      amount: Number(amount),
-    });
+      Keyboard.dismiss();
+      reset();
+      navigation.navigate('Home');
 
-    Keyboard.dismiss();
-    reset();
-    navigation.navigate('Home');
+    } else {
+      setTitleError(title.length < 1);
+      setAmountError(Number(amount) == (NaN || 0));
+    }
   }
 
   return (
@@ -63,7 +69,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
           <Text>Income</Text>
         </Button>
       </View>
-      <Item floatingLabel>
+      <Item floatingLabel error={!!amountError}>
         <Label>Amount</Label>
         <Input
           autoFocus
@@ -71,7 +77,7 @@ const ExpenseForm = ({expense, onSave}: ExpenseFormProps) => {
           onChangeText={setAmount}
           keyboardType={"numeric"} />
       </Item>
-      <Item floatingLabel>
+      <Item floatingLabel error={!!titleError} >
         <Label>Title</Label>
         <Input value={title} onChangeText={setTitle} />
       </Item>
