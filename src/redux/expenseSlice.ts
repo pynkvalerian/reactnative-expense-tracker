@@ -50,8 +50,8 @@ export const expenseSlice = createSlice({
     },
     addSuccess: (state, action: PayloadAction<ItemType>) => {
       const newItem = {
-        id: state.list.length + 1,
-        ...action.payload
+        ...action.payload,
+        id: state.list.length + 1
       }
       state.list.push(newItem);
       state.stats = calcStats(state.list);
